@@ -1,0 +1,18 @@
+.vscode
+postgres-demo/target
+!postgres-demo/.mvn/wrapper/maven-wrapper.jar
+
+### STS ###
+postgres-demo/.apt_generated
+postgres-demo/.classpath
+postgres-demo/.factorypath
+postgres-demo/.project
+postgres-demo/.settings
+postgres-demo/.springBeans
+postgres-demo/.sts4-cache
+
+### IntelliJ IDEA ###
+postgres-demo/.idea
+postgres-demo/*.iws
+postgres-demo/*.iml
+postgres-demo/*.ipr
