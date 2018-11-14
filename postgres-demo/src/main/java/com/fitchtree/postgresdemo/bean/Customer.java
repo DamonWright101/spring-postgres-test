@@ -16,6 +16,7 @@ public class Customer {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
+    private String username;
     private String firstname;
     private String lastname;
     private String email;
@@ -24,19 +25,28 @@ public class Customer {
         
     }
 
-    public Customer(Long id, String firstname, String lastname, String email) {
+    public Customer(Long id, String username, String firstname, String lastname, String email) {
         this.id = id;
+        this.username = username;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
     }
 
-    public Long getid() {
+    public Long getId() {
         return id;
     }
 
-    public void setid(Long id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getFirstname() {
@@ -72,14 +82,10 @@ public class Customer {
         hash = 79 * hash + Objects.hashCode(this.email);
         return hash;
     }
-
-    public String toJson() {
-        return "{" 
-            + "\"firstname\": \""+firstname+"\","
-            + "\"lastname\": \""+lastname+"\","
-            + "\"email\": \""+email+"\""
-            + "}";
+    
+    @Override
+    public String toString() {
+        return "Customer{" + "firstname=" + firstname + ", lastname=" + lastname
+                + ", email=" + email + '}';
     }
-
-
 }

@@ -1,9 +1,24 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Home Page</title>
+        <title>Customers</title>
     </head>
     <body>
-        <a href="showCustomers">Show Customers</a>
+        <h2>List Customers</h2>
+        <table>
+            <tr>
+                <th>Username</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+            </tr>
+
+            <tr th:each="customer : ${customers}">
+                    <td th:text="${customer.getUsername()}">Email</td>
+                    <td th:text="${customer.getFirstname()}">First Name</td>
+                    <td th:text="${customer.getLastname()}">Last Name</td>
+                    <td th:text="${customer.getEmail()}">Email</td>
+            </tr>
+        </table>
     </body>
 </html>

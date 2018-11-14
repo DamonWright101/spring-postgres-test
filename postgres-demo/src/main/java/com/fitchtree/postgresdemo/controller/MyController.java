@@ -15,10 +15,11 @@ public class MyController {
     @Autowired
     CustomerService customerService;
 
-    @RequestMapping("/showCustomers")
+    @RequestMapping(value="/showCustomers")
     public String findCustomers(Model model) {
         List<Customer> customers = (List<Customer>) customerService.findAll();
         model.addAttribute("customers", customers);
         return "showCustomers";
     }
+
 }

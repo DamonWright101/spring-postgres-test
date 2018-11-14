@@ -14,7 +14,15 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<Customer> findAll() {
-        List<Customer> customer = (List<Customer>) repo.findAll();
-        return customer;
+        List<Customer> customers = (List<Customer>) repo.findAll();
+        return customers;
+    }
+
+    public Customer byUsername(String username) {
+        List<Customer> customers = (List<Customer>) repo.findAll();
+        for (Customer customer: customers) {
+            if (customer.getUsername().equals(username)) return customer;
+        }
+        return null;
     }
 } 
