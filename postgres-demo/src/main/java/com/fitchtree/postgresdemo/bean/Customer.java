@@ -8,7 +8,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 @Entity
+@Component
+@Scope("prototype")
 @Table(name = "CUSTOMER")
 public class Customer {
 
@@ -33,6 +41,8 @@ public class Customer {
         this.email = email;
     }
 
+    @JsonIgnore
+    @JsonProperty(value = "id")
     public Long getId() {
         return id;
     }
@@ -85,7 +95,7 @@ public class Customer {
     
     @Override
     public String toString() {
-        return "Customer{" + "firstname=" + firstname + ", lastname=" + lastname
+        return "{" + "firstname=" + firstname + ", lastname=" + lastname
                 + ", email=" + email + '}';
     }
 }

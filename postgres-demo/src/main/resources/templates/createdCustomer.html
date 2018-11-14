@@ -1,0 +1,14 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Created Customer</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <h1>Result</h1>
+    <p>Welcome!</p>
+    <p th:text="'firstname: ' + ${customer.firstname}" />
+    <p th:text="'lastname: ' + ${customer.lastname}" />
+    <a href="/showCustomers">Home Page</a>
+</body>
+</html>

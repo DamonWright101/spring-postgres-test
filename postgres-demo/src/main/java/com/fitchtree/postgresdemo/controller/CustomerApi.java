@@ -3,21 +3,32 @@ package com.fitchtree.postgresdemo.controller;
 import com.fitchtree.postgresdemo.service.CustomerService;
 import com.fitchtree.postgresdemo.bean.Customer;
 
+import java.io.IOException;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-import java.util.List;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
-@Controller
+@RestController
 @RequestMapping("/api")
 public class CustomerApi {
 
     @Autowired
     private CustomerService customerService;
+
+    @Autowired
+    private Customer customer;
 
     @RequestMapping(value = "/test")
     public String hello_index(Model model) {
@@ -27,7 +38,19 @@ public class CustomerApi {
     @RequestMapping(value = "/{username}", method = RequestMethod.GET)
     @ResponseBody
     public Customer username_index(@PathVariable String username) {
-        System.out.println(this.customerService.byUsername(username));
         return this.customerService.byUsername(username);
+    }
+
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseEntity create(@RequestBody Map<String, Object> payload) {
+        if (customerService.createUser(payload) == false) 
+            throw new IllegalArgumentException("the fields email,username,firstname and lastname are required");
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body("{\"message\":\"accepted\"}");
+    }
+
+    @ExceptionHandler
+    void handleIllegalArgumentException(IllegalArgumentException e, HttpServletResponse response) throws IOException {
+        response.sendError(HttpStatus.BAD_REQUEST.value());
     }
 }
