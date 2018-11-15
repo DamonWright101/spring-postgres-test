@@ -4,6 +4,7 @@ import com.fitchtree.postgresdemo.service.CustomerService;
 import com.fitchtree.postgresdemo.bean.Customer;
 import com.fitchtree.postgresdemo.repository.CustomerRepository;
 
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +23,9 @@ public class MyController {
     @Autowired
     CustomerRepository customerRepository;
 
+    @Autowired
+    private BeanFactory beanFactory;
+
     @RequestMapping(value="/showCustomers")
     public String findCustomers(Model model) {
         List<Customer> customers = (List<Customer>) customerService.findAll();
@@ -31,8 +35,14 @@ public class MyController {
 
     @GetMapping(value="/createCustomer")
     public String createCustomersGet(Model model) {
-        model.addAttribute("customer", new Customer());
+        model.addAttribute("customer", beanFactory.getBean(Customer.class));
         return "createCustomer";
+    }
+
+    @GetMapping(value="/rabbit")
+    public String rabbit(Model model) {
+        model.addAttribute("customer", beanFactory.getBean(Customer.class));
+        return "rabbitQueueTest";
     }
 
     @PostMapping(value="/createCustomer")
@@ -40,4 +50,6 @@ public class MyController {
         customerRepository.save(customer);
         return "createdCustomer";
     }
+
+
 }
