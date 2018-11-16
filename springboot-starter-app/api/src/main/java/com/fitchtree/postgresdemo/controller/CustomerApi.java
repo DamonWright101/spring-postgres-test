@@ -1,6 +1,7 @@
 package com.fitchtree.postgresdemo.controller;
 
 import com.fitchtree.postgresdemo.service.CustomerService;
+import com.fitchtree.postgresdemo.utils.ApiWrapper;
 import com.fitchtree.postgresdemo.bean.Customer;
 
 import java.io.IOException;
@@ -9,6 +10,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +36,9 @@ public class CustomerApi {
     @Autowired
     private Customer customer;
 
+    @Autowired
+    private BeanFactory beanFactory;
+
     @RequestMapping(value = "/test")
     public String hello_index(Model model) {
         return "test page";
@@ -51,12 +56,21 @@ public class CustomerApi {
         return this.customerService.findAll();
     }
 
+    @RequestMapping(value = "/customers_page_test", method = RequestMethod.GET)
+    @ResponseBody
+    public ApiWrapper customers_page_test(Model model) {
+        ApiWrapper jsonToReturn = beanFactory.getBean(ApiWrapper.class);
+        jsonToReturn.setData(customerService.findAll());
+        jsonToReturn.setMessage("Hello From Damon");
+        return jsonToReturn;
+    }
+
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity create(@RequestBody Map<String, Object> payload) {
         if (customerService.createUser(payload) == false) 
             throw new IllegalArgumentException("the fields email,username,firstname and lastname are required");
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body("{\"message\":\"accepted\"}");
+        return ResponseEntity.status(HttpStatus.CREATED).body("{\"message\":\"created\"}");
     }
 
     @ExceptionHandler
