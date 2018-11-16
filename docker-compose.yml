@@ -2,13 +2,22 @@ version: "3"
 services:
   web:
     build:
-      context: postgres-demo
-      dockerfile: Dockerfile
+      context: springboot-starter-app
+      dockerfile: web/src/main/docker/Dockerfile
     restart: always
     depends_on:
     - postgres
     ports: 
     - 8080:8080
+  api:
+    build:
+      context: springboot-starter-app
+      dockerfile: api/src/main/docker/Dockerfile
+    restart: always
+    depends_on:
+    - postgres
+    ports: 
+    - 8090:8090
   postgres:
     image: postgres
     environment:

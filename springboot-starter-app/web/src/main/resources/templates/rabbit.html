@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Create Customers</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+        <h2>Create Rabbit Message</h2>
+        <form action="#" th:action="@{/rabbit}" th:object="${order}" method="post">
+            Order Number:<br />
+            <input type="text" name="firstname" th:field="*{orderNumber}" /><br />
+            Product ID:<br />
+            <input type="text" name="lastname" th:field="*{productId}" /><br />
+            amount:<br />
+            <input type="text" name="username" th:field="*{amount}" /><br />
+            Message:<br />
+            <input type="text" name="lastname" th:field="*{message}" /><br />
+            <input type="submit" value="Submit" />
+        </form>
+    </body>
+</html>

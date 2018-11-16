@@ -1,0 +1,34 @@
+package com.fitchtree.postgresdemo.amqp;
+
+import org.springframework.amqp.core.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class RabbitConfig {
+
+    public static final String QUEUE_ORDERS = "queue-damon";
+    public static final String EXCHANGE_ORDERS = "exchange-damon";
+    private static final String QUEUE_DEAD_ORDERS = "dead-damon";
+
+    @Bean
+    Queue ordersQueue() {
+        return QueueBuilder.durable(QUEUE_ORDERS).build();
+    }
+
+    @Bean
+    Queue deadLetterQueue() {
+        return QueueBuilder.durable(QUEUE_DEAD_ORDERS).build();
+    }
+
+    @Bean
+    Exchange exchangeOrders() {
+        return ExchangeBuilder.topicExchange(EXCHANGE_ORDERS).build();
+    }
+
+    @Bean
+    Binding binding(Queue ordersQueue, TopicExchange ordersExchange) {
+        return BindingBuilder.bind(ordersQueue).to(ordersExchange).with(QUEUE_ORDERS);
+    }
+
+}

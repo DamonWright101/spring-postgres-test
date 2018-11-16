@@ -1,18 +1,22 @@
 .vscode
-postgres-demo/target
-!postgres-demo/.mvn/wrapper/maven-wrapper.jar
+springboot-starter-app/target
+springboot-starter-app/*/.classpath
+springboot-starter-app/*/.settings
+springboot-starter-app/*/.project
+springboot-starter-app/*/target
+!springboot-starter-app/.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
-postgres-demo/.apt_generated
-postgres-demo/.classpath
-postgres-demo/.factorypath
-postgres-demo/.project
-postgres-demo/.settings
-postgres-demo/.springBeans
-postgres-demo/.sts4-cache
+springboot-starter-app/.apt_generated
+springboot-starter-app/.classpath
+springboot-starter-app/.factorypath
+springboot-starter-app/.project
+springboot-starter-app/.settings
+springboot-starter-app/.springBeans
+springboot-starter-app/.sts4-cache
 
 ### IntelliJ IDEA ###
-postgres-demo/.idea
-postgres-demo/*.iws
-postgres-demo/*.iml
-postgres-demo/*.ipr
+springboot-starter-app/.idea
+springboot-starter-app/*.iws
+springboot-starter-app/*.iml
+springboot-starter-app/*.ipr
