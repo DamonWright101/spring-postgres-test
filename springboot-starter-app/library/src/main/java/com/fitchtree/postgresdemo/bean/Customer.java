@@ -98,4 +98,47 @@ public class Customer {
         return "{" + "firstname=" + firstname + ", lastname=" + lastname
                 + ", email=" + email + '}';
     }
+
+    public boolean regexMatch(String field, String regex) {
+        regex = wildcardToRegex(regex);
+        switch(field) {
+            case "username": if (getUsername().matches(regex)) return true;
+            case "firstname": if (getFirstname().matches(regex)) return true;
+            case "lastname": if (getLastname().matches(regex)) return true;
+            case "email": if (getEmail().matches(regex)) return true;
+        }
+        return false;
+    }
+
+    private String wildcardToRegex(String wildcard){
+        StringBuffer s = new StringBuffer(wildcard.length());
+        s.append('^');
+        for (int i = 0, is = wildcard.length(); i < is; i++) {
+            char c = wildcard.charAt(i);
+            switch(c) {
+                case '*':   s.append(".*");
+                            break;
+                case '?':   s.append(".");
+                            break;            
+                // escape special regexp-characters
+                case '(': 
+                case ')': 
+                case '[': 
+                case ']': 
+                case '$':
+                case '^': 
+                case '.': 
+                case '{': 
+                case '}': 
+                case '|':
+                case '\\':  s.append("\\");
+                            s.append(c);
+                            break;
+                default:    s.append(c);
+                            break;
+            }
+        }
+        s.append('$');
+        return(s.toString());
+    }
 }

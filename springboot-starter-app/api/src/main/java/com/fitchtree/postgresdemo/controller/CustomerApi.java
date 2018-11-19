@@ -55,11 +55,18 @@ public class CustomerApi {
     @ResponseBody
     public ApiWrapper customersPageWithPageNumber(
     @RequestParam(value="page", defaultValue = "1") int page,
-    @RequestParam(value="username", defaultValue = "") String username) {
+    @RequestParam(value="username", defaultValue = "*") String username,
+    @RequestParam(value="firstname", defaultValue = "*") String firstname,
+    @RequestParam(value="lastname", defaultValue = "*") String lastname,
+    @RequestParam(value="email", defaultValue = "*") String email) {
         ApiWrapper jsonToReturn = beanFactory.getBean(ApiWrapper.class);
         jsonToReturn.setPage(page);
-        jsonToReturn.setMessage("Blerg");
         jsonToReturn.setData(customerService.findAll());
+        jsonToReturn.filterData("username", username);
+        jsonToReturn.filterData("firstname", firstname);
+        jsonToReturn.filterData("lastname", lastname);
+        jsonToReturn.filterData("email", email);
+        jsonToReturn.setMessage("Blergle");
         return jsonToReturn;
     }
 

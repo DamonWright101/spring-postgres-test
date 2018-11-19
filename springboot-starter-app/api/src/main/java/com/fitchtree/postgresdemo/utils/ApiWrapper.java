@@ -1,5 +1,6 @@
 package com.fitchtree.postgresdemo.utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fitchtree.postgresdemo.bean.Customer;
@@ -12,7 +13,7 @@ public class ApiWrapper {
     private String message;
     private int page = 1;
     private int pages;    
-    private Object data;   
+    private List<Object> data;   
     
     // getters and setters
     public String getMessage() {
@@ -27,18 +28,8 @@ public class ApiWrapper {
 		return data;
 	}
 
-	public void setData(Object data) {
-        if (data instanceof List<?>) {
-            List<Object> temp = (List<Object>) data;
-            setPages((int) Math.ceil((double) temp.size()/20));
-            if (getPage() < getPages() && getPage() > 0) {
-                this.data = temp.subList((getPage()-1)*20, (getPage()-1)*20+19);
-            } else if (getPage() == getPages()) {
-                this.data = temp.subList((getPage()-1)*20,temp.size());
-            } else {
-                this.data = null;
-            }
-        }
+	public void setData(List<?> data) {
+        this.data = (List<Object>) data;
     }
     
 	public int getPage() {
@@ -46,7 +37,7 @@ public class ApiWrapper {
     }
     
 	public void setPage(int page) {
-		this.page = page;
+        this.page = page;
     }
     
 	public int getPages() {
@@ -55,5 +46,27 @@ public class ApiWrapper {
     
 	public void setPages(int pages) {
 		this.pages = pages;
-	}
+    }
+    
+    public void filterData(String field, String regex) {
+        List<Object> temp = new ArrayList<Object>();
+        List<Customer> customers = (List<Customer>)(Object)data;
+        for (Customer customer: customers) {
+            if (customer.regexMatch(field, regex)) temp.add(customer);
+        }
+        setData(temp);
+        pageinateData();
+    }
+
+    private void pageinateData() {
+        List<Object> temp = data;
+        setPages((int) Math.ceil((double) temp.size()/20));
+        if (getPage() < getPages() && getPage() > 0) {
+            this.data = temp.subList((getPage()-1)*20, (getPage()-1)*20+19);
+        } else if (getPage() == getPages()) {
+            this.data = temp.subList((getPage()-1)*20,temp.size());
+        } else {
+            this.data = null;
+        }
+    }
 }
