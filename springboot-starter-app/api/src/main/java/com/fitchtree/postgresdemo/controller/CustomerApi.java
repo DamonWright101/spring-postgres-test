@@ -19,6 +19,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -52,16 +53,13 @@ public class CustomerApi {
 
     @RequestMapping(value = "/customers", method = RequestMethod.GET)
     @ResponseBody
-    public List<Customer> all_customers_index(Model model) {
-        return this.customerService.findAll();
-    }
-
-    @RequestMapping(value = "/customers_page_test", method = RequestMethod.GET)
-    @ResponseBody
-    public ApiWrapper customers_page_test(Model model) {
+    public ApiWrapper customersPageWithPageNumber(
+    @RequestParam(value="page", defaultValue = "1") int page,
+    @RequestParam(value="username", defaultValue = "") String username) {
         ApiWrapper jsonToReturn = beanFactory.getBean(ApiWrapper.class);
+        jsonToReturn.setPage(page);
+        jsonToReturn.setMessage("Blerg");
         jsonToReturn.setData(customerService.findAll());
-        jsonToReturn.setMessage("Hello From Damon");
         return jsonToReturn;
     }
 
